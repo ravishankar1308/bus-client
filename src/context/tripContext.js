@@ -79,6 +79,22 @@ const getTripList = (dispatch) => {
   };
 };
 
+const getTripListByDate = (dispatch) => {
+    return async (date) => {
+        // alert(date)
+        if (date) {
+            const response = await jsonServer.get('/api/trip');
+            const filter = await response.data.filter(
+                (data) => data.date === date,
+            );
+            await dispatch({type: 'tripList', payload: filter});
+        } else {
+            const response = await jsonServer.get('/api/trip');
+            await dispatch({type: 'tripList', payload: response.data});
+        }
+    };
+};
+
 const getTripDetail = (dispatch) => {
   return async (id) => {
     // alert(date)
@@ -99,6 +115,7 @@ export const {Provider, Context} = createDataContext(
     addTrip,
     getTripList,
     getTripDetail,
+      getTripListByDate
   },
   {},
 );

@@ -7,15 +7,15 @@ import {Button, Card, Paragraph} from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const FindTripList = ({navigation}) => {
-  const {state, getTripList} = useContext(Context);
+  const {state, getTripListByDate} = useContext(Context);
   const {state: userState} = useContext(UserContext);
   const {state: ticketState, addTicket} = useContext(TicketContext);
 
   const [date, setDate] = useState(navigation.getParam('date'));
   useEffect(() => {
-    getTripList(date);
+      getTripListByDate(date);
     const listiner = navigation.addListener('didFocus', async () => {
-      await getTripList(date);
+      await getTripListByDate(date);
     });
   }, []);
   if (state.trip == '') {
